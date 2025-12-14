@@ -19,19 +19,20 @@
 
         #wrapper {
             position: relative;
-
+            /* 【修正1】固定幅を削除し、最大幅を設定 */
             width: 100%; /* 親要素(body)に対して幅100% */
             max-width: 600px; /* PCでの最大幅を維持 */
         }
 
         #stamp-card-container {
             position: relative;
+            /* stampcard.pngの縦横比（ここでは3:2として計算: 1/1.5 = 0.6667）を保つためのハック */
             padding-top: 66.67%; 
             height: 0; 
             width: 100%;
             
             background-image: url('stampcard.png'); 
-            background-size: 100% 100%; 
+            background-size: 100% 100%; /* 【修正2】背景画像をコンテナサイズに完全に合わせる */
             background-repeat: no-repeat;
             background-position: center top; 
             
@@ -40,6 +41,7 @@
 
         .stamp-area {
             position: absolute;
+            /* サイズは元からパーセンテージ指定なのでレスポンシブ */
             width: 10%; 
             height: 15%; 
             cursor: pointer; 
@@ -47,13 +49,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 4em;
+            font-size: 4em; /* 文字サイズも相対的に調整される */
             line-height: 1;
             z-index: 10; 
         }
 
 
-      
+        /* スタンプ位置の定義（元からパーセンテージなので維持） */
         #stamp-1 { top: 56%; left: 7.3%; }    
         #stamp-2 { top: 52.5%; left: 25%; } 
         #stamp-3 { top: 35%; left: 12.2%; }   
@@ -71,7 +73,7 @@
             display: block;
             transform: scale(0.9) rotate(-5deg); 
             pointer-events: none; 
-
+            /* 【修正3】font-sizeをvw（viewport width）に変更し、画面サイズに合わせて調整 */
             font-size: 5vw; 
             max-font-size: 4em; /* PCサイズでの上限を維持 */
         }
@@ -86,7 +88,7 @@
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
-
+            /* 【修正4】コンテナの最下部に配置 */
             bottom: 2%; /* padding-topの割合が高さになるため、下からのパーセントで調整 */
             top: auto;
             left: 0%; 
@@ -104,7 +106,8 @@
             position: absolute;
         }
         
-
+        /* 各入力欄の位置を画像の「がつ」「にち」「まいめ」に正確に重ねる */
+        /* 【修正5】ピクセル固定からパーセンテージに変換 */
         /* 元の画像比率に基づいて調整 */
         .input-group:nth-child(1) { /* がつ */
             left: 8.3%; /* 50px / 600px */
@@ -126,7 +129,7 @@
             border: none; 
             border-bottom: 1px solid transparent; 
             border-radius: 0;
-
+            /* 【修正6】入力欄の幅・高さをパーセンテージで指定 */
             width: 5.8%; /* 35px / 600px */
             height: auto;
             text-align: center;
