@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (スマートフォン縦表示修正版)</title>
+    <title>ECO CHOICE スタンプカード (最終調整版)</title>
 
     <style>
-        /* --- 共通/PC向け スタイル --- */
+        /* --- 共通/PC向け スタイル (601px以上と、スマホのデフォルト) --- */
         body {
             font-family: sans-serif;
             margin: 0;
@@ -25,8 +25,7 @@
 
         #stamp-card-container {
             position: relative;
-            /* 背景画像のキャッシュ対策としてバージョン情報を更新 */
-            background-image: url('stampcard.png?v=20251221'); 
+            background-image: url('stampcard.png?v=20251231'); /* バージョン更新 */
             background-size: 100% 100%; 
             width: 100%; 
             padding-top: 66.67%; 
@@ -47,7 +46,7 @@
             z-index: 10; 
         }
 
-        /* スタンプ位置（ご提供いただいた最終位置） */
+        /* スタンプ位置は変更なし */
         #stamp-1 { top: 57%; left: 6%; }     
         #stamp-2 { top: 52.5%; left: 24%; }  
         #stamp-3 { top: 35%; left: 11%; }     
@@ -60,7 +59,7 @@
         #stamp-10 { top: 43%; left: 84%; }  
 
 
-        /* --- 画像スタンプのスタイル --- */
+        /* --- 画像スタンプのスタイル (PCデフォルト) --- */
         .stamp-image {
             display: block;
             pointer-events: none; 
@@ -71,45 +70,50 @@
             top: 0; 
         }
         
-        /* --- 入力フォームのスタイル --- */
+        /* --- 注意書きのスタイル ★新規追加/変更★ --- */
+        .note-landscape {
+            /* 注意書きはwrapper内にあるため、absoluteではなくrelative/staticで配置 */
+            width: 100%;
+            text-align: center;
+            font-size: 0.8em; 
+            color: #555;
+            margin: 5px 0 10px 0; 
+            z-index: 10;
+        }
+
+        /* --- 入力フォームのスタイル (PCとスマホ共通のトップ位置) --- */
         #input-form {
             position: absolute;
-            top: 88%; /* PCでの正しい位置を維持 */
+            top: 88%; /* PC/スマホ共通で 88% を維持 */
             left: 0%; 
             width: 100%; 
             z-index: 20;
             padding: 0;
         }
-
+        
+        /* 入力欄の位置（PC/共通） */
         .input-group {
             display: flex;
             align-items: center;
             margin-bottom: 0; 
             position: absolute;
         }
-        
-        /* 入力欄の位置（PC/共通） */
-        .input-group:nth-child(1) { 
-            left: 7%; 
-        }
-        .input-group:nth-child(2) { 
-            left: 18%; 
-        }
-        .input-group:nth-child(3) { 
-            left: 32%; 
-        }
+        .input-group:nth-child(1) { left: 7%; }
+        .input-group:nth-child(2) { left: 18%; }
+        .input-group:nth-child(3) { left: 32%; }
 
 
         .input-group label {
             display: none; 
         }
 
+        /* --- 入力フィールドのスタイル (PCデフォルト) --- */
         .input-group input[type="number"] {
-            padding: 4px 2px;
+            padding: 4px 2px; 
             border: none; 
             border-bottom: 1px solid transparent; 
             border-radius: 0;
-            width: 5.8%; 
+            width: 5.8%; /* PCでの標準幅 */
             height: auto;
             text-align: center;
             font-size: 2em; 
@@ -117,14 +121,12 @@
         }
         
         /* =================================================== */
-        /* --- スマートフォン特化 (600px以下の画面幅) --- */
+        /* --- スマートフォン共通 (600px以下の画面幅) --- */
         /* =================================================== */
         @media (max-width: 600px) {
             
-            /* 【入力フォーム全体の位置】: スマホ縦向きでのみ上へ移動 */
-            #input-form {
-                top: 60%; /* ★★★ 追加: スマホ縦向きで線に合わせるための位置 ★★★ */
-            }
+            /* 【入力フォーム全体の位置】: top: 60% の上書きを削除し、共通の 88% を継承させる */
+            /* #input-form { top: 60%; } <-- この設定を削除します */
             
             /* 【画像スタンプのサイズ調整】 */
             .stamp-image {
@@ -132,11 +134,17 @@
                 height: 8vw;
             }
             
-            /* 【入力文字サイズと幅】vwで固定 */
+            /* 【入力文字サイズと幅】: 縦向きで文字が切れない設定を適用 (モバイル共通) */
             .input-group input[type="number"] {
-                font-size: 4.2vw; 
-                width: 8%;      
-                padding: 1px 3px; 
+                font-size: 3.8vw; /* 縦向きで成功したサイズを適用 */
+                width: 9%;      /* 縦向きで成功した幅を適用 */
+                padding: 2px 0px; /* 縦向きで成功したパディングを適用 */
+            }
+            
+            /* スマホでは注意書きを少し大きくする */
+            .note-landscape {
+                font-size: 2.5vw;
+                margin-top: 5px;
             }
         }
         
@@ -171,6 +179,9 @@
             <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
             <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
         </div>
+        
+        <p class="note-landscape">※スマートフォンの方は画面を横向きにしてご利用ください。</p>
+
         <div id="input-form">
             <div class="input-group">
                 <label for="month">が つ</label>
@@ -197,7 +208,7 @@
                 const stampElement = document.createElement('img');
                 stampElement.classList.add('stamp-image'); 
                 // キャッシュ対策としてバージョン情報を更新
-                stampElement.src = 'ecochoice.png?v=20251221'; 
+                stampElement.src = 'ecochoice.png?v=20251231'; 
                 stampElement.alt = 'エコチョイススタンプ';
                 area.appendChild(stampElement);
             }
