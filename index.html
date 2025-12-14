@@ -17,167 +17,194 @@
             background-color: #f0f0f0; 
         }
 
+        #wrapper {
+            /* スタンプカードと入力フォームを内包するラッパー */
+            position: relative;
+            width: 600px; 
+            max-width: 90vw;
+            /* ラッパーには影をつけない */
+        }
+
         #stamp-card-container {
             position: relative;
-            /* ***修正済み***: 画像ファイル名を 'stampcard.png' に変更 */
             background-image: url('stampcard.png'); 
             background-size: contain; 
             background-repeat: no-repeat;
             background-position: center top; 
             
             /* 画像の比率に合わせてコンテナのサイズを設定 */
-            width: 600px; 
-            height: 400px; 
-            max-width: 90vw; 
+            width: 100%; /* ラッパーの幅に合わせる */
+            padding-top: 66.67%; /* 600x400の比率 (400/600 * 100%) */
+            height: 0; /* padding-topで高さを確保するため */
+            
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-            margin-bottom: 20px;
         }
 
         .stamp-area {
             position: absolute;
-            width: 15%; 
-            height: 25%; 
+            width: 10%; /* スタンプエリアの横幅を縮小し、より数字に合わせる */
+            height: 15%; /* スタンプエリアの縦幅を縮小 */
             cursor: pointer; 
             border-radius: 50%; 
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3em; 
+            font-size: 4em; /* スタンプを大きく */
             line-height: 1;
+            /* border: 1px dashed rgba(255, 0, 0, 0.5); /* デバッグ用: エリアの枠を表示 */
+            z-index: 10; /* スタンプが最前面に来るように */
         }
 
-        /* スタンプエリアの位置調整 (画像上の数字に合わせて調整済み) */
-        #stamp-1 { top: 60%; left: 3%; }
-        #stamp-2 { top: 70%; left: 20%; }
-        #stamp-3 { top: 40%; left: 10%; }
-        #stamp-4 { top: 20%; left: 25%; }
-        #stamp-5 { top: 45%; left: 35%; }
-        #stamp-6 { top: 40%; left: 55%; }
-        #stamp-7 { top: 20%; left: 65%; }
-        #stamp-8 { top: 35%; left: 75%; }
-        #stamp-9 { top: 55%; left: 70%; }
-        #stamp-10 { top: 65%; left: 80%; }
+        /* スタンプエリアの位置調整 (数字の真上にくるように調整) */
+        /* 画像の比率が変わったため、再調整しました。 */
+        #stamp-1 { top: 58%; left: 1.5%; }
+        #stamp-2 { top: 68%; left: 19%; }
+        #stamp-3 { top: 38%; left: 8.5%; }
+        #stamp-4 { top: 18%; left: 23.5%; }
+        #stamp-5 { top: 43%; left: 33.5%; }
+        #stamp-6 { top: 38%; left: 53.5%; }
+        #stamp-7 { top: 18%; left: 63.5%; }
+        #stamp-8 { top: 33%; left: 73.5%; }
+        #stamp-9 { top: 53%; left: 68.5%; }
+        #stamp-10 { top: 63%; left: 78.5%; }
 
-        /* スタンプ（ハート）のスタイル */
+        /* スタンプ（ハート）のスタイルと色の定義 */
         .stamp {
             display: block;
-            color: #e53935; 
-            transform: scale(0.7) rotate(-10deg); 
+            /* サイズを大きくし、傾きも調整 */
+            transform: scale(0.9) rotate(-5deg); 
             pointer-events: none; 
+            font-size: 1em; /* 親の.stamp-areaのfont-sizeを使う */
         }
+        
+        /* ランダムカラー用のクラス定義 */
+        .color-0 { color: #e53935; /* 赤 */ }
+        .color-1 { color: #1e88e5; /* 青 */ }
+        .color-2 { color: #43a047; /* 緑 */ }
+        .color-3 { color: #8e24aa; /* 紫 */ }
+        .color-4 { color: #ff9800; /* オレンジ */ }
 
-        /* 入力フォームのスタイル */
+
+        /* --- 入力フォームのスタイル --- */
         #input-form {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 400px;
+            position: absolute;
+            top: 75%; /* 背景画像の右下エリアに合わせる */
+            right: 2%; /* 背景画像の右下エリアに合わせる */
+            width: 30%; /* フォーム全体の幅 */
+            max-width: 150px;
+            z-index: 20;
+            background-color: transparent; /* 背景を透明にする */
+            padding: 5px;
         }
 
         #input-form h3 {
-            margin-top: 0;
-            color: #00796b;
-            border-bottom: 2px solid #00796b;
-            padding-bottom: 5px;
+            display: none; /* タイトルは不要なので非表示 */
         }
 
         .input-group {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 2px; /* 行間を詰める */
         }
 
         .input-group label {
             font-weight: bold;
-            margin-right: 10px;
-            width: 80px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            width: 35px; /* ラベル幅調整 */
+            color: #000;
         }
 
         .input-group input[type="number"] {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 60px;
+            padding: 2px;
+            border: 1px solid #666; /* 枠線を薄く */
+            border-radius: 2px;
+            width: 40px;
             text-align: center;
-            font-size: 1em;
+            font-size: 0.9em;
+            background-color: rgba(255, 255, 255, 0.8); /* 入力欄を少し透明に */
         }
 
         .note {
-            font-size: 0.8em;
-            color: #666;
-            text-align: right;
-            margin-top: 10px;
+            display: none; /* 注意書きも非表示 */
         }
     </style>
 </head>
 <body>
-    <div id="stamp-card-container">
-        
-<div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
-        <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
-        <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
-        <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
-        <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
-        <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
-        <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
-        <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
-        <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
-        <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
-    </div>
+    <div id="wrapper">
+        <div id="stamp-card-container">
+            <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
+            <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
+            <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
+            <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
+            <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
+            <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
+            <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
+            <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
+            <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
+            <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
+        </div>
 
-    
-<div id="input-form">
-        <h3>スタート</h3>
-        <div class="input-group">
-            <label for="month">が つ</label>
-            <input type="number" id="month" min="1" max="12" placeholder="12">
+        <div id="input-form">
+            <div class="input-group">
+                <label for="month">が つ</label>
+                <input type="number" id="month" min="1" max="12" placeholder="--">
+            </div>
+            <div class="input-group">
+                <label for="day">に ち</label>
+                <input type="number" id="day" min="1" max="31" placeholder="--">
+            </div>
+            <div class="input-group">
+                <label for="sheet-number">ま い め</label>
+                <input type="number" id="sheet-number" min="1" placeholder="1">
+            </div>
+            <p class="note">※この情報はブラウザの機能で一時的に保存されます</p>
         </div>
-        <div class="input-group">
-            <label for="day">に ち</label>
-            <input type="number" id="day" min="1" max="31" placeholder="14">
-        </div>
-        <div class="input-group">
-            <label for="sheet-number">ま い め</label>
-            <input type="number" id="sheet-number" min="1" placeholder="1">
-        </div>
-        <p class="note">※この情報はブラウザの機能で一時的に保存されます</p>
     </div>
 
     <script>
         /* JavaScript: スタンプ機能とデータ保存機能 */
         document.addEventListener('DOMContentLoaded', () => {
             const stampAreas = document.querySelectorAll('.stamp-area');
+            const colorClasses = ['color-0', 'color-1', 'color-2', 'color-3', 'color-4'];
 
+            // スタンプを作成する共通関数
+            function createStamp(area, colorIndex) {
+                const stampElement = document.createElement('span');
+                stampElement.classList.add('stamp', colorClasses[colorIndex]);
+                stampElement.textContent = '❤'; 
+                area.appendChild(stampElement);
+            }
+            
             // --- クリック時の動作 ---
             stampAreas.forEach(area => {
                 area.addEventListener('click', () => {
                     let stampElement = area.querySelector('.stamp');
+                    const stampNumber = area.dataset.stampNumber;
 
                     if (stampElement) {
                         // スタンプがあれば削除し、保存データも削除
                         area.removeChild(stampElement);
-                        localStorage.removeItem(`stamp${area.dataset.stampNumber}`);
+                        localStorage.removeItem(`stamp${stampNumber}`);
+                        localStorage.removeItem(`stampColor${stampNumber}`);
                     } else {
-                        // スタンプがなければ作成し、保存
-                        stampElement = document.createElement('span');
-                        stampElement.classList.add('stamp');
-                        stampElement.textContent = '❤'; 
-                        area.appendChild(stampElement);
-                        localStorage.setItem(`stamp${area.dataset.stampNumber}`, 'stamped');
+                        // スタンプがなければ作成し、ランダムな色を決定して保存
+                        const randomColorIndex = Math.floor(Math.random() * colorClasses.length);
+                        createStamp(area, randomColorIndex);
+                        localStorage.setItem(`stamp${stampNumber}`, 'stamped');
+                        localStorage.setItem(`stampColor${stampNumber}`, randomColorIndex);
                     }
                 });
             });
 
             // --- ページロード時の状態復元 ---
             stampAreas.forEach(area => {
-                // LocalStorageに保存されたスタンプの状態を読み込み
-                if (localStorage.getItem(`stamp${area.dataset.stampNumber}`) === 'stamped') {
-                    const stampElement = document.createElement('span');
-                    stampElement.classList.add('stamp');
-                    stampElement.textContent = '❤'; 
-                    area.appendChild(stampElement);
+                const stampNumber = area.dataset.stampNumber;
+                const storedColorIndex = localStorage.getItem(`stampColor${stampNumber}`);
+
+                // LocalStorageに保存されたスタンプの状態と色を読み込み
+                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped' && storedColorIndex !== null) {
+                    createStamp(area, parseInt(storedColorIndex));
                 }
             });
 
