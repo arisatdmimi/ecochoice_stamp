@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (最終確定版 V3)</title>
+    <title>ECO CHOICE スタンプカード (最終最終確定版)</title>
 
     <style>
-        /* --- 共通/PC向け スタイル --- (ハートの基準サイズを小さくしています) */
+        /* --- 共通/PC向け スタイル --- */
         body {
             font-family: sans-serif;
             margin: 0;
@@ -28,7 +28,7 @@
             background-image: url('stampcard.png'); 
             background-size: 100% 100%; 
             width: 100%; 
-            padding-top: 66.67%; /* 縦横比を固定 */
+            padding-top: 66.67%; 
             height: 0; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
@@ -44,8 +44,8 @@
             align-items: center;
             line-height: 1; 
             z-index: 10; 
-            /* ハートのサイズ基準を極端に小さく設定 */
-            font-size: 8px; 
+            /* PCでは、ハートのサイズ基準を極端に小さく設定 */
+            font-size: 1px; /* 基準サイズを最小化 */
         }
 
         /* スタンプ位置（パーセンテージで維持） */
@@ -64,10 +64,9 @@
         /* スタンプ（ハート）のスタイルと色の定義 */
         .stamp {
             display: block;
-            transform: scale(0.9) rotate(-5deg); 
             pointer-events: none; 
-            /* 【PC/共通】親要素 (8px) の 8倍で、ハートの大きさ(64px)を調整 */
-            font-size: 8em; 
+            /* PCサイズでの表示を transform: scale で強制的に制御 */
+            transform: scale(40) rotate(-5deg); /* font-size: 1pxに対し40倍 */
             position: relative;
             top: -5%; 
         }
@@ -100,13 +99,13 @@
         
         /* 入力欄の位置（PC/共通） */
         .input-group:nth-child(1) { 
-            left: 8%; 
+            left: 14%; 
         }
         .input-group:nth-child(2) { 
-            left: 18.5%; 
+            left: 27%; 
         }
         .input-group:nth-child(3) { 
-            left: 33%; 
+            left: 45%; 
         }
 
 
@@ -133,24 +132,25 @@
             
             /* 【スタンプエリアの基本フォントサイズ】vwで強制的に小さく */
             .stamp-area {
-                font-size: 1vw; 
+                font-size: 1px; 
             }
             
-            /* 【ハート最終調整】親要素のサイズ基準（1vw）の 35倍でハートの大きさを調整 */
+            /* 【ハート最終調整】強制的に小さく！ scale(18) = 18px程度 */
             .stamp {
-                font-size: 35em; /* 35倍 = 35vw。これで大きさを再調整 */
+                /* PCの transform を上書きし、スマホに最適化 */
+                transform: scale(18) rotate(-5deg); 
                 top: 0; 
             }
 
-            /* 【入力欄の再々最終調整】スマホの表示ズレを吸収するための微調整 */
+            /* 【入力欄の再々最終調整】ズレが最大になる点を再微調整 */
             .input-group:nth-child(1) { 
-                left: 14%; 
+                left: 14.5%; 
             }
             .input-group:nth-child(2) { 
-                left: 27%; 
+                left: 27.5%; 
             }
             .input-group:nth-child(3) { 
-                left: 45%; 
+                left: 45.5%; 
             }
             
             /* 【入力文字サイズと幅】vwで固定 */
@@ -164,7 +164,7 @@
         /* PC (601px以上) のときのサイズ上限を定義 */
         @media (min-width: 601px) {
             .stamp {
-                font-size: 8em; 
+                transform: scale(40) rotate(-5deg); 
                 top: -5%; 
             }
             .input-group input[type="number"] {
@@ -172,7 +172,7 @@
                 width: 35px;
             }
             .stamp-area {
-                font-size: 8px; 
+                font-size: 1px; 
             }
         }
 
