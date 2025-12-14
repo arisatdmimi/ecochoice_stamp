@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (縦向き最適化)</title>
+    <title>ECO CHOICE スタンプカード (最終レスポンシブ)</title>
 
     <style>
-        /* CSS: スタイル定義 */
+        /* --- 共通/PC向け スタイル --- */
         body {
             font-family: sans-serif;
             margin: 0;
@@ -19,6 +19,7 @@
 
         #wrapper {
             position: relative;
+            /* 基本は画面全体幅を使用 */
             width: 100%; 
             max-width: 600px; /* PCでの最大幅を維持 */
         }
@@ -49,7 +50,7 @@
             z-index: 10; 
         }
 
-        /* スタンプ位置の定義（パーセンテージなので維持） */
+        /* スタンプ位置（パーセンテージで維持） */
         #stamp-1 { top: 56%; left: 7.3%; }     
         #stamp-2 { top: 52.5%; left: 25%; }  
         #stamp-3 { top: 35%; left: 12.2%; }     
@@ -67,8 +68,8 @@
             display: block;
             transform: scale(0.9) rotate(-5deg); 
             pointer-events: none; 
-            /* 【縦向き最適化1】ハートを少し大きく見やすく */
-            font-size: 8vw; 
+            /* PCでは固定サイズ */
+            font-size: 4em; 
         }
         
         /* ランダムカラー用のクラス定義 */
@@ -79,10 +80,9 @@
         .color-4 { color: #ff9800; } 
 
 
-        /* --- 入力フォームのスタイル --- */
+        /* --- 入力フォームのスタイル (PC基準) --- */
         #input-form {
             position: absolute;
-            /* 【縦向き最適化2】下端の位置を微調整 */
             bottom: 3.5%; 
             top: auto; 
             left: 0%; 
@@ -99,8 +99,191 @@
             position: absolute;
         }
         
-        /* 各入力欄の位置（パーセンテージで維持） */
+        /* 入力欄の位置（パーセンテージで維持） */
         .input-group:nth-child(1) { /* がつ */
             left: 8.5%;
         }
         .input-group:nth-child(2) { /* にち */
+            left: 19%;
+        }
+        .input-group:nth-child(3) { /* まいめ */
+            left: 33.5%;
+        }
+
+
+        .input-group label {
+            display: none; 
+        }
+
+        .input-group input[type="number"] {
+            padding: 4px 2px;
+            border: none; 
+            border-bottom: 1px solid transparent; 
+            border-radius: 0;
+            width: 5.8%; /* PC基準で固定 */
+            height: auto;
+            text-align: center;
+            font-size: 1em; /* PC基準で固定 */
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .input-group input[type="number"]:focus {
+            outline: none;
+            border-bottom: 1px solid #00796b;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* =================================================== */
+        /* --- スマートフォン特化 (600px以下の画面幅) --- */
+        /* =================================================== */
+        @media (max-width: 600px) {
+            
+            /* 【最重要修正】ハートのサイズを画面幅に対し 5% に大幅に縮小 */
+            .stamp {
+                font-size: 5vw; 
+            }
+
+            /* 【入力欄の微調整】位置をさらに微調整 */
+            .input-group:nth-child(1) { 
+                left: 8.0%; /* がつ */
+            }
+            .input-group:nth-child(2) { 
+                left: 18.5%; /* にち */
+            }
+            .input-group:nth-child(3) { 
+                left: 33.0%; /* まいめ */
+            }
+            
+            /* 【入力文字サイズ】文字サイズは3.5vwで固定し、入力欄の幅を調整 */
+            .input-group input[type="number"] {
+                font-size: 3.5vw;
+                width: 6.5%; /* スマホでタップしやすく、枠に収まるように幅を再計算 */
+                padding: 3px 1px;
+            }
+        }
+        
+        /* PC (601px以上) のときは上記スマホ設定を上書きしない */
+        @media (min-width: 601px) {
+            .stamp {
+                font-size: 4em; 
+            }
+            .input-group input[type="number"] {
+                font-size: 1em;
+                width: 35px;
+            }
+        }
+        
+        .note {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="stamp-card-container">
+            <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
+            <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
+            <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
+            <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
+            <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
+            <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
+            <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
+            <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
+            <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
+            <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
+        </div>
+
+        <div id="input-form">
+            <div class="input-group">
+                <label for="month">が つ</label>
+                <input type="number" id="month" min="1" max="12" placeholder=" " maxlength="2">
+            </div>
+            <div class="input-group">
+                <label for="day">に ち</label>
+                <input type="number" id="day" min="1" max="31" placeholder=" " maxlength="2">
+            </div>
+            <div class="input-group">
+                <label for="sheet-number">ま い め</label>
+                <input type="number" id="sheet-number" min="1" max="50" placeholder=" " maxlength="2">
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        /* JavaScript: スタンプ機能とデータ保存機能 (変更なし) */
+        document.addEventListener('DOMContentLoaded', () => {
+            const stampAreas = document.querySelectorAll('.stamp-area');
+            const colorClasses = ['color-0', 'color-1', 'color-2', 'color-3', 'color-4'];
+
+            // スタンプを作成する共通関数
+            function createStamp(area, colorIndex) {
+                const stampElement = document.createElement('span');
+                stampElement.classList.add('stamp', colorClasses[colorIndex]);
+                stampElement.textContent = '❤'; 
+                area.appendChild(stampElement);
+            }
+            
+            // --- クリック時の動作 ---
+            stampAreas.forEach(area => {
+                area.addEventListener('click', () => {
+                    let stampElement = area.querySelector('.stamp');
+                    const stampNumber = area.dataset.stampNumber;
+
+                    if (stampElement) {
+                        // スタンプがあれば削除し、保存データも削除
+                        area.removeChild(stampElement);
+                        localStorage.removeItem(`stamp${stampNumber}`);
+                        localStorage.removeItem(`stampColor${stampNumber}`);
+                    } else {
+                        // スタンプがなければ作成し、ランダムな色を決定して保存
+                        const randomColorIndex = Math.floor(Math.random() * colorClasses.length);
+                        createStamp(area, randomColorIndex);
+                        localStorage.setItem(`stamp${stampNumber}`, 'stamped');
+                        localStorage.setItem(`stampColor${stampNumber}`, randomColorIndex);
+                    }
+                });
+            });
+
+            // --- ページロード時の状態復元 ---
+            stampAreas.forEach(area => {
+                const stampNumber = area.dataset.stampNumber;
+                const storedColorIndex = localStorage.getItem(`stampColor${stampNumber}`);
+
+                // LocalStorageに保存されたスタンプの状態と色を読み込み
+                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped' && storedColorIndex !== null) {
+                    createStamp(area, parseInt(storedColorIndex));
+                }
+            });
+
+            // --- 入力フォームのデータ保存/復元と制限 ---
+            const monthInput = document.getElementById('month');
+            const dayInput = document.getElementById('day');
+            const sheetNumberInput = document.getElementById('sheet-number');
+            
+            // 枚数入力の制限 (1〜50)
+            const limitInput = (input, max) => {
+                if (input.value > max) {
+                    input.value = max;
+                }
+                if (input.value < 1) {
+                    input.value = 1;
+                }
+            };
+            
+            sheetNumberInput.addEventListener('input', () => limitInput(sheetNumberInput, 50));
+            sheetNumberInput.addEventListener('change', () => limitInput(sheetNumberInput, 50));
+
+            // 保存された値を読み込む
+            monthInput.value = localStorage.getItem('startMonth') || '';
+            dayInput.value = localStorage.getItem('startDay') || '';
+            sheetNumberInput.value = localStorage.getItem('sheetNumber') || '';
+
+            // 値が変更されたら保存する
+            monthInput.addEventListener('input', (e) => localStorage.setItem('startMonth', e.target.value));
+            dayInput.addEventListener('input', (e) => localStorage.setItem('startDay', e.target.value));
+            sheetNumberInput.addEventListener('input', (e) => localStorage.setItem('sheetNumber', e.target.value));
+        });
+    </script>
+</body>
+</html>
