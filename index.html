@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (最終動作保証・色固定版)</title>
+    <title>ECO CHOICE スタンプカード (最終確定版)</title>
 
     <style>
         /* --- 共通/PC向け スタイル --- */
@@ -25,8 +25,8 @@
 
         #stamp-card-container {
             position: relative;
-            /* キャッシュ対策: バージョン情報を更新（20251215に変更） */
-            background-image: url('stampcard.png?v=20251215'); 
+            /* 背景画像にバージョン情報を追加し、キャッシュを強制クリア */
+            background-image: url('stampcard.png?v=20251214'); 
             background-size: 100% 100%; 
             width: 100%; 
             padding-top: 66.67%; /* 縦横比を固定 */
@@ -70,10 +70,10 @@
             transform: rotate(-5deg); 
             position: relative;
             top: 0; 
-            /* 画像の色は変えません (カラーフィルターのCSSを削除済) */
         }
         
-        /* 以前のランダムカラー用のCSS定義 (.color-0, .color-1, ...) は削除しました */
+        /* ランダムカラー用のクラス定義（画像の色相を操作） */
+        .color { filter: hue-rotate(0deg); }
 
 
         /* --- 入力フォームのスタイル --- */
@@ -96,13 +96,13 @@
         
         /* 入力欄の位置（PC/共通） */
         .input-group:nth-child(1) { 
-            left: 14.5%; 
+            left: 7.5%; 
         }
         .input-group:nth-child(2) { 
-            left: 27.5%; 
+            left: 20.5%; 
         }
         .input-group:nth-child(3) { 
-            left: 45.5%; 
+            left: 38.5%; 
         }
 
 
@@ -119,7 +119,7 @@
             height: auto;
             text-align: center;
             font-size: 1em; 
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0);
         }
         
         /* =================================================== */
@@ -135,18 +135,18 @@
             
             /* 【入力欄の位置】スマホ向けの最終微調整 */
             .input-group:nth-child(1) { 
-                left: 14.5%; 
+                left: 7.5%; 
             }
             .input-group:nth-child(2) { 
-                left: 27.5%; 
+                left: 20.5%; 
             }
             .input-group:nth-child(3) { 
-                left: 45.5%; 
+                left: 38.5%; 
             }
             
             /* 【入力文字サイズと幅】vwで固定 */
             .input-group input[type="number"] {
-                font-size: 4vw; 
+                font-size: 1vw; 
                 width: 7.0%; 
                 padding: 3px 1px;
             }
@@ -202,16 +202,17 @@
     
 
     <script>
+        /* JavaScript: スタンプ機能を画像用に変更 */
         document.addEventListener('DOMContentLoaded', () => {
             const stampAreas = document.querySelectorAll('.stamp-area');
+            const colorClasses = ['color-0', 'color-1', 'color-2', 'color-3', 'color-4'];
 
-            // スタンプを作成する共通関数 (色制御ロジックを削除)
-            // 引数から colorIndex を削除
-            function createStamp(area) {
+            // スタンプを作成する共通関数 (画像に変更)
+            function createStamp(area, colorIndex) {
                 const stampElement = document.createElement('img');
-                stampElement.classList.add('stamp-image'); 
-                // キャッシュ対策としてバージョン情報を更新
-                stampElement.src = 'ecochoice.png?v=20251215'; 
+                stampElement.classList.add('stamp-image', colorClasses[colorIndex]); 
+                // ★★★ 画像ファイル名にバージョン情報を追加し、キャッシュを強制クリア ★★★
+                stampElement.src = 'ecochoice.png?v=20251214'; 
                 stampElement.alt = 'エコチョイススタンプ';
                 area.appendChild(stampElement);
             }
@@ -219,18 +220,19 @@
             // --- クリック時の動作 ---
             stampAreas.forEach(area => {
                 area.addEventListener('click', () => {
+                    // クエリセレクタを画像に変更
                     let stampElement = area.querySelector('.stamp-image'); 
                     const stampNumber = area.dataset.stampNumber;
 
                     if (stampElement) {
                         area.removeChild(stampElement);
                         localStorage.removeItem(`stamp${stampNumber}`);
-                        // 色に関する保存データも削除
-                        localStorage.removeItem(`stampColor${stampNumber}`); 
+                        localStorage.removeItem(`stampColor${stampNumber}`);
                     } else {
-                        // ランダムな色選択ロジックを削除し、createStamp() を引数なしで呼び出す
-                        createStamp(area);
+                        const randomColorIndex = Math.floor(Math.random() * colorClasses.length);
+                        createStamp(area, randomColorIndex);
                         localStorage.setItem(`stamp${stampNumber}`, 'stamped');
+                        localStorage.setItem(`stampColor${stampNumber}`, randomColorIndex);
                     }
                 });
             });
@@ -238,11 +240,10 @@
             // --- ページロード時の状態復元 ---
             stampAreas.forEach(area => {
                 const stampNumber = area.dataset.stampNumber;
-                
-                // 色に関するデータの読み込みを削除
-                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped') {
-                    // createStamp() を引数なしで呼び出す
-                    createStamp(area);
+                const storedColorIndex = localStorage.getItem(`stampColor${stampNumber}`);
+
+                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped' && storedColorIndex !== null) {
+                    createStamp(area, parseInt(storedColorIndex));
                 }
             });
 
