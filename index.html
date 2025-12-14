@@ -134,22 +134,6 @@
                 padding: 1px 3px; /* スマホでの標準パディング */
             }
         }
-
-        /* =================================================== */
-        /* --- スマートフォン *縦向き* 専用 (orientation: portrait) --- */
-        /* =================================================== */
-        /* 画面が縦向き（ポートレート）の時のみ適用 */
-        @media (max-width: 600px) and (orientation: portrait) {
-            
-            /* #input-form の top は 88% を継承（変更なし）*/
-            
-            /* 【入力文字サイズと幅/パディング】: 数字が隠れる問題の解決 */
-            .input-group input[type="number"] {
-                width: 9%;      /* 縦画面の幅を維持 */
-                font-size: 3.8vw; /* ★修正1: フォントサイズを更に縮小 (4.2vw -> 3.8vw) ★ */
-                padding: 2px 0px; /* ★修正2: 上下パディングを調整し、文字を線の上に配置 ★ */
-            }
-        }
         
         /* PC (601px以上) のときのサイズ上限を定義 */
         @media (min-width: 601px) {
@@ -182,7 +166,9 @@
             <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
             <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
         </div>
-
+        
+　　　　　<p class="note-landscape">※スマートフォンの方は画面を横向きにしてご利用ください。</p>
+       
         <div id="input-form">
             <div class="input-group">
                 <label for="month">が つ</label>
