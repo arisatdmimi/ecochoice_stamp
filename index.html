@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (スマートフォン縦表示修正版)</title>
+    <title>ECO CHOICE スタンプカード (最終調整版)</title>
 
     <style>
         /* --- 共通/PC向け スタイル --- */
-        /* ... (その他のスタイルは変更なし) ... */
         body {
             font-family: sans-serif;
             margin: 0;
@@ -27,21 +26,57 @@
         #stamp-card-container {
             position: relative;
             /* 背景画像のキャッシュ対策としてバージョン情報を更新 */
-            background-image: url('stampcard.png?v=20251221'); /* キャッシュ回避のため更新 */
+            background-image: url('stampcard.png?v=20251216'); 
             background-size: 100% 100%; 
             width: 100%; 
-            padding-top: 66.67%; 
+            padding-top: 66.67%; /* 縦横比を固定 */
             height: 0; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
-        /* ... (スタンプ位置は変更なし) ... */
 
+        .stamp-area {
+            position: absolute;
+            width: 10%; 
+            height: 15%; 
+            cursor: pointer; 
+            border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1; 
+            z-index: 10; 
+        }
+
+        /* スタンプ位置（ご提供いただいた最終位置） */
+        #stamp-1 { top: 57%; left: 6%; }     
+        #stamp-2 { top: 52.5%; left: 24%; }  
+        #stamp-3 { top: 35%; left: 11%; }     
+        #stamp-4 { top: 17%; left: 23%; }   
+        #stamp-5 { top: 35.5%; left: 35%; } 
+        #stamp-6 { top: 33%; left: 52.5%; }  
+        #stamp-7 { top: 12.5%; left: 62%; } 
+        #stamp-8 { top: 23%; left: 78%; }  
+        #stamp-9 { top: 43%; left: 66%; }  
+        #stamp-10 { top: 43%; left: 84%; }  
+
+
+        /* --- 画像スタンプのスタイル --- */
+        .stamp-image {
+            display: block;
+            pointer-events: none; 
+            width: 50px; 
+            height: 50px;
+            transform: rotate(-5deg); 
+            position: relative;
+            top: 0; 
+        }
+        
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
-            top: 73%; /* ★★★ 修正箇所 1: 88% から 60% に大幅修正し、線の上に移動 ★★★ */
+            top: 88%; /* ★★★ 入力欄を上に移動 (top: 70% から 65% に変更) ★★★ */
             left: 0%; 
-            width: 100%; 
+            width: 100%; /* 幅を 100% に戻す */
             z-index: 20;
             padding: 0;
         }
@@ -55,13 +90,13 @@
         
         /* 入力欄の位置（PC/共通） */
         .input-group:nth-child(1) { 
-            left: 7%; 
+            left: 12%; 
         }
         .input-group:nth-child(2) { 
-            left: 18%; 
+            left: 35%; 
         }
         .input-group:nth-child(3) { 
-            left: 32%; 
+            left: 65%; 
         }
 
 
@@ -77,7 +112,7 @@
             width: 5.8%; 
             height: auto;
             text-align: center;
-            font-size: 2em; 
+            font-size: 1em; 
             background-color: rgba(255, 255, 255, 0);
         }
         
@@ -94,9 +129,9 @@
             
             /* 【入力文字サイズと幅】vwで固定 */
             .input-group input[type="number"] {
-                font-size: 4.5vw; /* ★★★ 修正箇所 2: 文字サイズを微調整 ★★★ */
-                width: 8%;      
-                padding: 5px 5px; /* ★★★ 修正箇所 3: 上下パディングを最小化し、数字を線の上に引き上げる ★★★ */
+                font-size: 4vw; /* ★★★ 文字が隠れないよう 1vw から 4vw に修正 ★★★ */
+                width: 7.0%; 
+                padding: 5px 5px;
             }
         }
         
@@ -120,10 +155,18 @@
 <body>
     <div id="wrapper">
         <div id="stamp-card-container">
-            </div>
+            <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
+            <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
+            <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
+            <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
+            <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
+            <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
+            <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
+            <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
+            <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
+            <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
+        </div>
 
-        <p class="note-landscape">※スマートフォンの方は画面を横向きにしてご利用ください。</p>
-        
         <div id="input-form">
             <div class="input-group">
                 <label for="month">が つ</label>
@@ -150,12 +193,27 @@
                 const stampElement = document.createElement('img');
                 stampElement.classList.add('stamp-image'); 
                 // キャッシュ対策としてバージョン情報を更新
-                stampElement.src = 'ecochoice.png?v=20251221'; 
+                stampElement.src = 'ecochoice.png?v=20251216'; 
                 stampElement.alt = 'エコチョイススタンプ';
                 area.appendChild(stampElement);
             }
             
-            // ... (JavaScriptのロジックは変更なし) ...
+            // --- クリック時の動作 ---
+            stampAreas.forEach(area => {
+                area.addEventListener('click', () => {
+                    let stampElement = area.querySelector('.stamp-image'); 
+                    const stampNumber = area.dataset.stampNumber;
+
+                    if (stampElement) {
+                        area.removeChild(stampElement);
+                        localStorage.removeItem(`stamp${stampNumber}`);
+                        localStorage.removeItem(`stampColor${stampNumber}`); 
+                    } else {
+                        createStamp(area);
+                        localStorage.setItem(`stamp${stampNumber}`, 'stamped');
+                    }
+                });
+            });
 
             // --- ページロード時の状態復元 ---
             stampAreas.forEach(area => {
