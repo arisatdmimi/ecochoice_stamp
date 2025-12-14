@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (レスポンシブ)</title>
+    <title>ECO CHOICE スタンプカード (レスポンシブ最適化)</title>
 
     <style>
         /* CSS: スタイル定義 */
         body {
             font-family: sans-serif;
             margin: 0;
-            padding: 10px; /* スマホで適切なパディングに修正 */
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -19,7 +19,7 @@
 
         #wrapper {
             position: relative;
-            /* 【修正1】幅を100%にし、スマホでもはみ出さないようにする */
+            /* 常に画面幅に合わせる */
             width: 100%; 
             max-width: 600px; /* PCでの最大幅を維持 */
         }
@@ -27,15 +27,13 @@
         #stamp-card-container {
             position: relative;
             background-image: url('stampcard.png'); 
-            /* 【修正2】背景画像をコンテナサイズに完全に合わせる */
-            background-size: 100% 100%; 
+            background-size: 100% 100%; /* 縦横比固定に合わせて全体を覆う */
             background-repeat: no-repeat;
             background-position: center top; 
             
             width: 100%; 
             padding-top: 66.67%; /* 縦横比を固定 */
             height: 0; 
-            
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
 
@@ -51,7 +49,6 @@
             line-height: 1;
             z-index: 10; 
         }
-
 
         /* スタンプ位置の定義（パーセンテージなので維持） */
         #stamp-1 { top: 56%; left: 7.3%; }     
@@ -71,8 +68,8 @@
             display: block;
             transform: scale(0.9) rotate(-5deg); 
             pointer-events: none; 
-            /* 【修正3】スタンプエリアに対して相対的なサイズ（スマホで適切な大きさに） */
-            font-size: 500%; 
+            /* 【再調整1】サイズを 500% から 400% に縮小し、スマホで枠に収まるように */
+            font-size: 400%; 
         }
         
         /* ランダムカラー用のクラス定義 */
@@ -86,12 +83,11 @@
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
-            /* 【修正4】位置をコンテナの下端に調整 */
-            bottom: 2%; 
+            /* 位置をコンテナの下端に再調整 */
+            bottom: 3%; 
             top: auto; 
             left: 0%; 
-            width: 100%; /* 親要素に合わせて幅100% */
-            max-width: none;
+            width: 100%; 
             z-index: 20;
             background-color: transparent; 
             padding: 0;
@@ -104,15 +100,15 @@
             position: absolute;
         }
         
-        /* 【修正5】各入力欄の位置をパーセンテージに変換 */
-        .input-group:nth-child(1) { /* がつ: 50px / 600px = 8.3% */
-            left: 8.3%;
+        /* 【再調整2】各入力欄の位置を微調整 */
+        .input-group:nth-child(1) { /* がつ: 8.3% から 8.5% に微増 */
+            left: 8.5%;
         }
-        .input-group:nth-child(2) { /* にち: 113px / 600px = 18.8% */
-            left: 18.8%;
+        .input-group:nth-child(2) { /* にち: 18.8% から 19% に微増 */
+            left: 19%;
         }
-        .input-group:nth-child(3) { /* まいめ: 200px / 600px = 33.3% */
-            left: 33.3%;
+        .input-group:nth-child(3) { /* まいめ: 33.3% から 33.5% に微増 */
+            left: 33.5%;
         }
 
 
@@ -121,17 +117,16 @@
         }
 
         .input-group input[type="number"] {
-            padding: 4px 2px; /* スマホでタップしやすく、見やすい文字サイズに */
+            padding: 4px 2px;
             border: none; 
             border-bottom: 1px solid transparent; 
             border-radius: 0;
-            /* 【修正6】入力欄の幅をパーセンテージで指定 */
-            width: 5.8%; /* 35px / 600px = 5.8% */ 
+            width: 5.8%; 
             height: auto;
             text-align: center;
-            /* 【修正7】入力文字のサイズをvwで指定 */
-            font-size: 3.5vw; 
-            background-color: rgba(255, 255, 255, 0.5); /* 見やすさのため背景を追加 */
+            /* PCでは16pxに固定 (後述のメディアクエリでスマホサイズではvwで調整) */
+            font-size: 16px; 
+            background-color: rgba(255, 255, 255, 0.5);
         }
         
         .input-group input[type="number"]:focus {
@@ -140,7 +135,15 @@
             background-color: rgba(255, 255, 255, 0.9);
         }
 
-        /* PC (600px以上) のときのサイズ上限を定義 */
+        /* スマートフォン向け（画面幅 600px以下）の最適化 */
+        @media (max-width: 600px) {
+            .input-group input[type="number"] {
+                /* 【再調整3】スマホでの文字サイズをビューポート幅で定義 */
+                font-size: 3.5vw; 
+            }
+        }
+        
+        /* PC (601px以上) のときのサイズ上限を定義 */
         @media (min-width: 601px) {
             .stamp {
                 /* PCサイズでは元のフォントサイズに戻す */
