@@ -4,39 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECO CHOICE スタンプカード</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="stamp-card-container">
-        <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
-        <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
-        <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
-        <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
-        <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
-        <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
-        <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
-        <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
-        <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
-        <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
-    </div>
 
-    <div id="input-form">
-        <h3>スタート</h3>
-        <div class="input-group">
-            <label for="month">が つ</label>
-            <input type="number" id="month" min="1" max="12" placeholder="12">
-        </div>
-        <div class="input-group">
-            <label for="day">に ち</label>
-            <input type="number" id="day" min="1" max="31" placeholder="14">
-        </div>
-        <div class="input-group">
-            <label for="sheet-number">ま い め</label>
-            <input type="number" id="sheet-number" min="1" placeholder="1">
-        </div>
-        <p class="note">※この情報は保存されません</p>
-    </div>
+    <style>
+        /* CSS: スタイル定義 */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
 
-    <script src="script.js"></script>
-</body>
-</html>
+        #stamp-card-container {
+            position: relative;
+            /* **ここが背景画像をセットしているコードです** */
+            background-image: url('スタンプカード.png'); /* 画像ファイル名が正しいか確認 */
+            background-size: contain; /* コンテナ内に画像を収める */
+            background-repeat: no-repeat; /* 画像を繰り返さない */
+            background-position: center top; /* 画像を中央上部に配置 */
+            
+            /* 画像の比率に合わせてコンテナのサイズを設定 (必要に応じて調整) */
+            width: 600px; 
+            height: 400px; 
+            max-width: 90vw; /* 画面幅に合わせて最大幅を調整 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影をつける */
+            margin-bottom: 20px;
+        }
+
+        .stamp-area {
+            position: absolute;
+            width: 15%; /* スタンプエリアの横幅 */
+            height: 25%; /* スタンプエリアの縦幅 */
+            cursor: pointer; /* マウスカーソルをポインターに */
+            border-radius: 50%; /* 円形にする */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em; /* スタンプの文字の大きさ */
+            line-height: 1;
+            /* border: 1px dashed red; /* デバッグ用: エリアの枠を表示 */
+        }
+
+        /* スタンプエリアの位置調整 (画像上の数字に合わせて調整済み) */
+        /* これらの 'top' と 'left' のパーセンテージは、#stamp-card-container 
+           に対する相対位置です。画像上の数字の円の中心に合うように調整してください。 */
+        #stamp-1 { top: 60%; left: 3%; }
+        #stamp-2 { top: 70%; left: 20%; }
+        #stamp-3 { top: 40%; left: 10%; }
+        #stamp-4 { top: 20%; left: 25%; }
+        #stamp-5 { top: 45%; left: 35%; }
+        #stamp-6 { top: 40%; left: 55%; }
+        #stamp-7 { top: 20%; left: 65%; }
+        #stamp-8 { top: 35%; left: 75%; }
+        #stamp-9 { top: 55%; left: 70%; }
+        #stamp-10 { top: 65%; left: 80%; }
+
+        /* スタンプ（ハート）のスタイル */
+        .stamp {
+            display: block;
+            color: #e53935; /* ハートの色 */
+            transform: scale(0.7) rotate(-10deg); /* 少し小さく、傾ける */
+            pointer-events: none; /* スタンプ自体はクリックイベントを受け付けない */
+        }
+
+        /* 入力フォームのスタイル */
+        #input-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        #input-form h3 {
+            margin-top:
