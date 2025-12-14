@@ -52,18 +52,17 @@
             z-index: 10; 
         }
 
-        /* 1. 【調整済み】スタンプエリアの位置調整 (数字の真上にくるように微調整) */
-        /* topの値を全体的に引き上げました (約5%〜10%の上方修正) */
-        #stamp-1 { top: 56%; left: 7%; }     
+
+        #stamp-1 { top: 56%; left: 7.5%; }     
         #stamp-2 { top: 52.5%; left: 25%; }  
         #stamp-3 { top: 35%; left: 12.5%; }    
         #stamp-4 { top: 17%; left: 24%; }   
         #stamp-5 { top: 36%; left: 35%; } 
-        #stamp-6 { top: 32%; left: 54.5%; }    
-        #stamp-7 { top: 11%; left: 64%; } 
+        #stamp-6 { top: 32%; left: 54.3%; }    
+        #stamp-7 { top: 11%; left: 63.8%; } 
         #stamp-8 { top: 22.5%; left: 74.5%; }   
         #stamp-9 { top: 43%; left: 65.5%; }  
-        #stamp-10 { top: 43%; left: 82.5%; } 
+        #stamp-10 { top: 43%; left: 82.8%; } 
 
 
         /* スタンプ（ハート）のスタイルと色の定義 */
@@ -86,9 +85,9 @@
         #input-form {
             position: absolute;
             /* 2. 【調整済み】日付の書き込み欄の線の上に重なるように調整 */
-            top: 95%; /
-            left: 5%; 
-            width: 35%; 
+            top: 91%; /
+            left: 0%; 
+            width: 50%; 
             max-width: 200px;
             z-index: 20;
             background-color: transparent; 
@@ -104,13 +103,13 @@
         
         /* 各入力欄の位置を画像の「がつ」「にち」「まいめ」に正確に重ねる */
         .input-group:nth-child(1) { /* がつ */
-            left: 25px;
+            left: 45px;
         }
         .input-group:nth-child(2) { /* にち */
-            left: 90px;
+            left: 110px;
         }
         .input-group:nth-child(3) { /* まいめ */
-            left: 160px;
+            left: 180px;
         }
 
 
