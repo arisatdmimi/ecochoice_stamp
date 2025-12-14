@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECO CHOICE デジタルスタンプカード</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      background: #f7fbf9;
+      margin: 0;
+      padding: 24px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #0b1c3f;
+    }
+    p {
+      color: #555;
+      margin-bottom: 24px;
+    }
+    .card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stamp {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 3px dashed #b7dcd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #9aa;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .stamp.active {
+      border-style: solid;
+      background: #e6f4ef;
+      color: #0b1c3f;
+      font-weight: bold;
+      transform: scale(1.05);
+    }
+    .controls {
+      margin-top: 20px;
+    }
+    button {
+      background: #0b1c3f;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+    button.secondary {
+      background: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>ECO CHOICE</h1>
+  <p>タップしてスタンプをためよう 🌱</p>
+
+  <div class="card">
+    <div class="grid" id="stampGrid"></div>
+
+    <div class="controls">
+      <button onclick="resetStamps()">リセット</button>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL = 10;
+    const grid = document.getElementById('stampGrid');
+    let stamps = JSON.parse(localStorage.getItem('ecoChoiceStamps')) || Array(TOTAL).fill(false);
+
+    function render() {
+      grid.innerHTML = '';
+      stamps.forEach((active, i) => {
+        const div = document.createElement('div');
+        div.className = 'stamp' + (active ? ' active' : '');
+        div.textContent = active ? '✔︎' : i + 1;
+        div.onclick = () => toggle(i);
+        grid.appendChild(div);
+      });
+    }
+
+    function toggle(index) {
+      stamps[index] = !stamps[index];
+      save();
+      render();
+    }
+
+    function resetStamps() {
+      if (confirm('スタンプをすべてリセットしますか？')) {
+        stamps = Array(TOTAL).fill(false);
+        save();
+        render();
+      }
+    }
+
+    function save() {
+      localStorage.setItem('ecoChoiceStamps', JSON.stringify(stamps));
+    }
+
+    render();
+  </script>
+</body>
+</html>
