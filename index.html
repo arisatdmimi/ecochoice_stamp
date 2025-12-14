@@ -14,15 +14,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #f0f0f0; 
+            /* **自然を感じさせる色に変更 (明るいミントグリーン)** */
+            background-color: #e0f7e9; 
         }
 
         #wrapper {
-            /* スタンプカードと入力フォームを内包するラッパー */
             position: relative;
             width: 600px; 
             max-width: 90vw;
-            /* 独立した白いフォームを削除したため、wrapperの下部に余白は不要 */
         }
 
         #stamp-card-container {
@@ -32,7 +31,6 @@
             background-repeat: no-repeat;
             background-position: center top; 
             
-            /* 画像の比率に合わせてコンテナのサイズを設定 (600x400の比率) */
             width: 100%; 
             padding-top: 66.67%; 
             height: 0; 
@@ -42,31 +40,30 @@
 
         .stamp-area {
             position: absolute;
-            width: 10%; /* スタンプエリアの横幅 */
-            height: 15%; /* スタンプエリアの縦幅 */
+            width: 10%; 
+            height: 15%; 
             cursor: pointer; 
             border-radius: 50%; 
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 4em; /* スタンプの大きさ */
+            font-size: 4em; 
             line-height: 1;
             z-index: 10; 
         }
 
-        /* 1. 【調整済み】スタンプエリアの位置調整 (数字の円の中心に収まるように微調整) */
-        /* 目標: 数字の円（直径約13%）の中心にスタンプの中心を合わせる */
-        /* 基準サイズ: 10%x15% のエリアの中心が数字の円の中心に来るように微調整 */
-        #stamp-1 { top: 68%; left: 3%; }     /* 旧: 58%, 1.5% */
-        #stamp-2 { top: 68%; left: 24.5%; }  /* 旧: 68%, 24.5% */
-        #stamp-3 { top: 46%; left: 5%; }     /* 旧: 38%, 5% */
-        #stamp-4 { top: 25%; left: 23%; }    /* 旧: 18%, 23% */
-        #stamp-5 { top: 46%; left: 38.5%; }  /* 旧: 43%, 38.5% */
-        #stamp-6 { top: 25%; left: 56%; }    /* 旧: 38%, 56% */
-        #stamp-7 { top: 18%; left: 74.5%; }  /* 旧: 18%, 74.5% */
-        #stamp-8 { top: 38%; left: 81%; }    /* 旧: 33%, 81% */
-        #stamp-9 { top: 63%; left: 69%; }    /* 旧: 53%, 69% */
-        #stamp-10 { top: 73%; left: 88%; }   /* 旧: 63%, 88% */
+        /* 1. 【調整済み】スタンプエリアの位置調整 (数字の真上にくるように微調整) */
+        /* topの値を全体的に引き上げました (約5%〜10%の上方修正) */
+        #stamp-1 { top: 60%; left: 3%; }     /* 旧: 68% */
+        #stamp-2 { top: 60%; left: 24.5%; }  /* 旧: 68% */
+        #stamp-3 { top: 38%; left: 5%; }     /* 旧: 46% */
+        #stamp-4 { top: 18%; left: 23%; }    /* 旧: 25% */
+        #stamp-5 { top: 38%; left: 38.5%; }  /* 旧: 46% */
+        #stamp-6 { top: 18%; left: 56%; }    /* 旧: 25% */
+        #stamp-7 { top: 12%; left: 74.5%; }  /* 旧: 18% */
+        #stamp-8 { top: 31%; left: 81%; }    /* 旧: 38% */
+        #stamp-9 { top: 56%; left: 69%; }    /* 旧: 63% */
+        #stamp-10 { top: 66%; left: 88%; }   /* 旧: 73% */
 
 
         /* スタンプ（ハート）のスタイルと色の定義 */
@@ -88,9 +85,9 @@
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
-            /* 3. 【調整済み】画像左下の「スタート がつ にち まいめ」の位置に合わせる */
-            top: 78%; /* スタート枠の高さに合わせて調整 */
-            left: 5%; /* スタート枠の左端に合わせて調整 */
+            /* 2. 【調整済み】日付の書き込み欄の線の上に重なるように調整 */
+            top: 80%; /* 旧: 78% (下に移動) */
+            left: 5%; 
             width: 35%; 
             max-width: 200px;
             z-index: 20;
@@ -106,7 +103,6 @@
         }
         
         /* 各入力欄の位置を画像の「がつ」「にち」「まいめ」に正確に重ねる */
-        /* 画像の線の下に入力欄が来るように調整 */
         .input-group:nth-child(1) { /* がつ */
             left: 20px;
         }
@@ -119,21 +115,21 @@
 
 
         .input-group label {
-            display: none; /* ラベルは画像にあるので非表示 */
+            display: none; 
         }
 
         .input-group input[type="number"] {
             padding: 2px;
-            border: none; /* 枠線を削除し、画像上の線のみにする */
-            border-bottom: 1px solid transparent; /* マウスオーバー時に色を出すための準備 */
+            border: none; 
+            border-bottom: 1px solid transparent; 
             border-radius: 0;
-            width: 35px; /* 入力欄の幅を調整 */
+            width: 35px; 
             height: 15px;
             text-align: center;
             font-size: 1em;
-            background-color: rgba(255, 255, 255, 0.5); /* 入力欄を半透明の白で背景を隠す */
+            background-color: rgba(255, 255, 255, 0.5); 
         }
-        /* 入力時に枠線が分かるようにする */
+        
         .input-group input[type="number"]:focus {
             outline: none;
             border-bottom: 1px solid #00796b;
@@ -142,11 +138,6 @@
 
         .note {
             display: none; 
-        }
-        
-        /* 2. 【削除済み】画面下部の白い枠のフォームはHTMLから削除 */
-        #standalone-form {
-            display: none;
         }
     </style>
 </head>
@@ -176,13 +167,11 @@
             </div>
             <div class="input-group">
                 <label for="sheet-number">ま い め</label>
-                <input type="number" id="sheet-number" min="1" placeholder=" " maxlength="3">
+                <input type="number" id="sheet-number" min="1" max="50" placeholder=" " maxlength="2">
             </div>
         </div>
     </div>
     
-    <div id="standalone-form"></div> 
-
 
     <script>
         /* JavaScript: スタンプ機能とデータ保存機能 */
@@ -230,10 +219,24 @@
                 }
             });
 
-            // --- 入力フォームのデータ保存/復元 ---
+            // --- 入力フォームのデータ保存/復元と制限 ---
             const monthInput = document.getElementById('month');
             const dayInput = document.getElementById('day');
             const sheetNumberInput = document.getElementById('sheet-number');
+            
+            // **【新規】枚数入力の制限 (1〜50)**
+            const limitInput = (input, max) => {
+                if (input.value > max) {
+                    input.value = max;
+                }
+                if (input.value < 1) {
+                    input.value = 1;
+                }
+            };
+            
+            sheetNumberInput.addEventListener('input', () => limitInput(sheetNumberInput, 50));
+            sheetNumberInput.addEventListener('change', () => limitInput(sheetNumberInput, 50));
+
 
             // 保存された値を読み込む
             monthInput.value = localStorage.getItem('startMonth') || '';
