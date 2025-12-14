@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (最終確定版)</title>
+    <title>ECO CHOICE スタンプカード (最終調整版)</title>
 
     <style>
         /* --- 共通/PC向け スタイル --- */
@@ -25,8 +25,8 @@
 
         #stamp-card-container {
             position: relative;
-            /* 背景画像にバージョン情報を追加し、キャッシュを強制クリア */
-            background-image: url('stampcard.png?v=20251214'); 
+            /* 背景画像のキャッシュ対策としてバージョン情報を更新 */
+            background-image: url('stampcard.png?v=20251216'); 
             background-size: 100% 100%; 
             width: 100%; 
             padding-top: 66.67%; /* 縦横比を固定 */
@@ -47,7 +47,7 @@
             z-index: 10; 
         }
 
-        /* スタンプ位置（パーセンテージで維持） */
+        /* スタンプ位置（ご提供いただいた最終位置） */
         #stamp-1 { top: 57%; left: 6%; }     
         #stamp-2 { top: 52.5%; left: 24%; }  
         #stamp-3 { top: 35%; left: 11%; }     
@@ -55,7 +55,7 @@
         #stamp-5 { top: 35.5%; left: 35%; } 
         #stamp-6 { top: 33%; left: 52.5%; }  
         #stamp-7 { top: 12.5%; left: 62%; } 
-        #stamp-8 { top: 23%; left: 78%; }   
+        #stamp-8 { top: 23%; left: 78%; }  
         #stamp-9 { top: 43%; left: 66%; }  
         #stamp-10 { top: 43%; left: 84%; }  
 
@@ -64,7 +64,6 @@
         .stamp-image {
             display: block;
             pointer-events: none; 
-            /* PCサイズでの画像サイズを固定 */
             width: 50px; 
             height: 50px;
             transform: rotate(-5deg); 
@@ -72,16 +71,12 @@
             top: 0; 
         }
         
-        /* ランダムカラー用のクラス定義（画像の色相を操作） */
-        .color { filter: hue-rotate(0deg); }
-
-
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
-            top: 65% 
+            top: 65%; /* ★★★ 入力欄を上に移動 (top: 70% から 65% に変更) ★★★ */
             left: 0%; 
-            width: 50%; 
+            width: 100%; /* 幅を 100% に戻す */
             z-index: 20;
             padding: 0;
         }
@@ -126,26 +121,15 @@
         /* =================================================== */
         @media (max-width: 600px) {
             
-            /* 【画像スタンプのサイズ調整】画面幅に対して 8vw で固定 */
+            /* 【画像スタンプのサイズ調整】 */
             .stamp-image {
                 width: 8vw; 
                 height: 8vw;
             }
             
-            /* 【入力欄の位置】スマホ向けの最終微調整 */
-            .input-group:nth-child(1) { 
-                left: 12%; 
-            }
-            .input-group:nth-child(2) { 
-                left: 35%; 
-            }
-            .input-group:nth-child(3) { 
-                left: 65%; 
-            }
-            
             /* 【入力文字サイズと幅】vwで固定 */
             .input-group input[type="number"] {
-                font-size: 4vw; 
+                font-size: 4vw; /* ★★★ 文字が隠れないよう 1vw から 4vw に修正 ★★★ */
                 width: 7.0%; 
                 padding: 5px 5px;
             }
@@ -201,17 +185,15 @@
     
 
     <script>
-        /* JavaScript: スタンプ機能を画像用に変更 */
         document.addEventListener('DOMContentLoaded', () => {
             const stampAreas = document.querySelectorAll('.stamp-area');
-            const colorClasses = ['color-0', 'color-1', 'color-2', 'color-3', 'color-4'];
 
-            // スタンプを作成する共通関数 (画像に変更)
-            function createStamp(area, colorIndex) {
+            // スタンプを作成する共通関数 (色制御ロジックを削除)
+            function createStamp(area) {
                 const stampElement = document.createElement('img');
-                stampElement.classList.add('stamp-image', colorClasses[colorIndex]); 
-                // ★★★ 画像ファイル名にバージョン情報を追加し、キャッシュを強制クリア ★★★
-                stampElement.src = 'ecochoice.png?v=20251214'; 
+                stampElement.classList.add('stamp-image'); 
+                // キャッシュ対策としてバージョン情報を更新
+                stampElement.src = 'ecochoice.png?v=20251216'; 
                 stampElement.alt = 'エコチョイススタンプ';
                 area.appendChild(stampElement);
             }
@@ -219,19 +201,16 @@
             // --- クリック時の動作 ---
             stampAreas.forEach(area => {
                 area.addEventListener('click', () => {
-                    // クエリセレクタを画像に変更
                     let stampElement = area.querySelector('.stamp-image'); 
                     const stampNumber = area.dataset.stampNumber;
 
                     if (stampElement) {
                         area.removeChild(stampElement);
                         localStorage.removeItem(`stamp${stampNumber}`);
-                        localStorage.removeItem(`stampColor${stampNumber}`);
+                        localStorage.removeItem(`stampColor${stampNumber}`); 
                     } else {
-                        const randomColorIndex = Math.floor(Math.random() * colorClasses.length);
-                        createStamp(area, randomColorIndex);
+                        createStamp(area);
                         localStorage.setItem(`stamp${stampNumber}`, 'stamped');
-                        localStorage.setItem(`stampColor${stampNumber}`, randomColorIndex);
                     }
                 });
             });
@@ -239,10 +218,9 @@
             // --- ページロード時の状態復元 ---
             stampAreas.forEach(area => {
                 const stampNumber = area.dataset.stampNumber;
-                const storedColorIndex = localStorage.getItem(`stampColor${stampNumber}`);
-
-                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped' && storedColorIndex !== null) {
-                    createStamp(area, parseInt(storedColorIndex));
+                
+                if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped') {
+                    createStamp(area);
                 }
             });
 
