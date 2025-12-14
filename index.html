@@ -235,7 +235,6 @@
             sheetNumberInput.addEventListener('input', () => limitInput(sheetNumberInput, 50));
             sheetNumberInput.addEventListener('change', () => limitInput(sheetNumberInput, 50));
 
-
             // 保存された値を読み込む
             monthInput.value = localStorage.getItem('startMonth') || '';
             dayInput.value = localStorage.getItem('startDay') || '';
