@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (ecochoice.png 使用最終版)</title>
+    <title>ECO CHOICE スタンプカード (最終確定版)</title>
 
     <style>
         /* --- 共通/PC向け スタイル --- */
@@ -25,10 +25,11 @@
 
         #stamp-card-container {
             position: relative;
-            background-image: url('stampcard.png'); 
+            /* 背景画像にバージョン情報を追加し、キャッシュを強制クリア */
+            background-image: url('stampcard.png?v=20251214'); 
             background-size: 100% 100%; 
             width: 100%; 
-            padding-top: 66.67%; 
+            padding-top: 66.67%; /* 縦横比を固定 */
             height: 0; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
@@ -71,7 +72,7 @@
             top: 0; 
         }
         
-        /* ランダムカラー用のクラス定義（画像の色が変わる前提） */
+        /* ランダムカラー用のクラス定義（画像の色相を操作） */
         .color-0 { filter: hue-rotate(0deg); }
         .color-1 { filter: hue-rotate(60deg); } 
         .color-2 { filter: hue-rotate(120deg); } 
@@ -176,10 +177,4 @@
     <div id="wrapper">
         <div id="stamp-card-container">
             <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
-            <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
-            <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
-            <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
-            <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
-            <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
-            <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
-            <div class="
+            <div class="stamp
