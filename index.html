@@ -80,4 +80,124 @@
         }
 
         #input-form h3 {
-            margin-top:
+            margin-top: 0;
+            color: #00796b;
+            border-bottom: 2px solid #00796b;
+            padding-bottom: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 80px;
+        }
+
+        .input-group input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 60px;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .note {
+            font-size: 0.8em;
+            color: #666;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="stamp-card-container">
+        <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
+        <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
+        <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
+        <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
+        <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
+        <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
+        <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
+        <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
+        <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
+        <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
+    </div>
+
+    <div id="input-form">
+        <h3>スタート</h3>
+        <div class="input-group">
+            <label for="month">が つ</label>
+            <input type="number" id="month" min="1" max="12" placeholder="12">
+        </div>
+        <div class="input-group">
+            <label for="day">に ち</label>
+            <input type="number" id="day" min="1" max="31" placeholder="14">
+        </div>
+        <div class="input-group">
+            <label for="sheet-number">ま い め</label>
+            <input type="number" id="sheet-number" min="1" placeholder="1">
+        </div>
+        <p class="note">※この情報はブラウザの機能で一時的に保存されます</p>
+    </div>
+
+    <script>
+        /* JavaScript: スタンプ機能とデータ保存機能 */
+        document.addEventListener('DOMContentLoaded', () => {
+            const stampAreas = document.querySelectorAll('.stamp-area');
+
+            // --- クリック時の動作 ---
+            stampAreas.forEach(area => {
+                area.addEventListener('click', () => {
+                    let stampElement = area.querySelector('.stamp');
+
+                    if (stampElement) {
+                        // スタンプがあれば削除し、保存データも削除
+                        area.removeChild(stampElement);
+                        localStorage.removeItem(`stamp${area.dataset.stampNumber}`);
+                    } else {
+                        // スタンプがなければ作成し、保存
+                        stampElement = document.createElement('span');
+                        stampElement.classList.add('stamp');
+                        stampElement.textContent = '❤'; 
+                        area.appendChild(stampElement);
+                        localStorage.setItem(`stamp${area.dataset.stampNumber}`, 'stamped');
+                    }
+                });
+            });
+
+            // --- ページロード時の状態復元 ---
+            stampAreas.forEach(area => {
+                // LocalStorageに保存されたスタンプの状態を読み込み
+                if (localStorage.getItem(`stamp${area.dataset.stampNumber}`) === 'stamped') {
+                    const stampElement = document.createElement('span');
+                    stampElement.classList.add('stamp');
+                    stampElement.textContent = '❤'; 
+                    area.appendChild(stampElement);
+                }
+            });
+
+            // --- 入力フォームのデータ保存/復元 ---
+            const monthInput = document.getElementById('month');
+            const dayInput = document.getElementById('day');
+            const sheetNumberInput = document.getElementById('sheet-number');
+
+            // 保存された値を読み込む
+            monthInput.value = localStorage.getItem('startMonth') || '';
+            dayInput.value = localStorage.getItem('startDay') || '';
+            sheetNumberInput.value = localStorage.getItem('sheetNumber') || '';
+
+            // 値が変更されたら保存する
+            monthInput.addEventListener('input', (e) => localStorage.setItem('startMonth', e.target.value));
+            dayInput.addEventListener('input', (e) => localStorage.setItem('startDay', e.target.value));
+            sheetNumberInput.addEventListener('input', (e) => localStorage.setItem('sheetNumber', e.target.value));
+        });
+    </script>
+</body>
+</html>
+```http://googleusercontent.com/image_generation_content/0
