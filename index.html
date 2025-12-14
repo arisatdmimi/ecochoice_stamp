@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO CHOICE スタンプカード (最終動作保証版)</title>
+    <title>ECO CHOICE スタンプカード (最終動作保証・色固定版)</title>
 
     <style>
         /* --- 共通/PC向け スタイル --- */
@@ -25,7 +25,7 @@
 
         #stamp-card-container {
             position: relative;
-            /* 背景画像にバージョン情報を追加し、キャッシュを強制クリア */
+            /* キャッシュ対策: バージョン情報を更新（20251215に変更） */
             background-image: url('stampcard.png?v=20251215'); 
             background-size: 100% 100%; 
             width: 100%; 
@@ -70,9 +70,12 @@
             transform: rotate(-5deg); 
             position: relative;
             top: 0; 
-            /* 画像の色は変えません */
+            /* 画像の色は変えません (カラーフィルターのCSSを削除済) */
         }
         
+        /* 以前のランダムカラー用のCSS定義 (.color-0, .color-1, ...) は削除しました */
+
+
         /* --- 入力フォームのスタイル --- */
         #input-form {
             position: absolute;
@@ -202,11 +205,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const stampAreas = document.querySelectorAll('.stamp-area');
 
-            // スタンプを作成する共通関数
+            // スタンプを作成する共通関数 (色制御ロジックを削除)
+            // 引数から colorIndex を削除
             function createStamp(area) {
                 const stampElement = document.createElement('img');
-                stampElement.classList.add('stamp-image');
-                // キャッシュ対策としてバージョン情報を追加
+                stampElement.classList.add('stamp-image'); 
+                // キャッシュ対策としてバージョン情報を更新
                 stampElement.src = 'ecochoice.png?v=20251215'; 
                 stampElement.alt = 'エコチョイススタンプ';
                 area.appendChild(stampElement);
@@ -219,11 +223,12 @@
                     const stampNumber = area.dataset.stampNumber;
 
                     if (stampElement) {
-                        // スタンプがあれば削除し、保存データも削除
                         area.removeChild(stampElement);
                         localStorage.removeItem(`stamp${stampNumber}`);
+                        // 色に関する保存データも削除
+                        localStorage.removeItem(`stampColor${stampNumber}`); 
                     } else {
-                        // スタンプがなければ作成
+                        // ランダムな色選択ロジックを削除し、createStamp() を引数なしで呼び出す
                         createStamp(area);
                         localStorage.setItem(`stamp${stampNumber}`, 'stamped');
                     }
@@ -234,7 +239,9 @@
             stampAreas.forEach(area => {
                 const stampNumber = area.dataset.stampNumber;
                 
+                // 色に関するデータの読み込みを削除
                 if (localStorage.getItem(`stamp${stampNumber}`) === 'stamped') {
+                    // createStamp() を引数なしで呼び出す
                     createStamp(area);
                 }
             });
