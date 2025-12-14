@@ -1,143 +1,42 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eco Choice｜デジタルスタンプカード</title>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --green: #5fb3a2;
-      --dark: #2f4f4f;
-      --bg: #f4f9f7;
-      --card: #ffffff;
-      --accent: #f2c94c;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Zen Maru Gothic', sans-serif;
-      background: var(--bg);
-      color: var(--dark);
-      display: flex;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 420px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    header h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    header p {
-      font-size: 14px;
-      color: #5f7d7a;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .stamp-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .stamp {
-      aspect-ratio: 1 / 1;
-      border-radius: 16px;
-      border: 2px dashed var(--green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: var(--green);
-      background: #ffffff;
-      transition: all 0.2s ease;
-    }
-
-    .stamp.active {
-      background: var(--green);
-      color: #ffffff;
-      border-style: solid;
-      font-weight: 700;
-    }
-
-    .footer {
-      margin-top: 24px;
-      text-align: center;
-      font-size: 13px;
-      color: #6b8f8b;
-    }
-
-    .reward {
-      margin-top: 20px;
-      background: #fdf7e3;
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-      font-size: 14px;
-      border: 1px solid var(--accent);
-    }
-
-    .reward strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECO CHOICE スタンプカード</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Eco Choice</h1>
-      <p>小さな選択が、未来をつくる</p>
-    </header>
-
-    <div class="card">
-      <h2>スタンプカード</h2>
-      <p style="font-size:13px;">エコな行動でスタンプを集めよう</p>
-
-      <div class="stamp-grid">
-        <div class="stamp active">✔</div>
-        <div class="stamp active">✔</div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-        <div class="stamp"> </div>
-      </div>
-
-      <div class="reward">
-        <strong>9個集めると…</strong>
-        エコバッジがもらえる！
-      </div>
+    <div id="stamp-card-container">
+        <div class="stamp-area" id="stamp-1" data-stamp-number="1"></div>
+        <div class="stamp-area" id="stamp-2" data-stamp-number="2"></div>
+        <div class="stamp-area" id="stamp-3" data-stamp-number="3"></div>
+        <div class="stamp-area" id="stamp-4" data-stamp-number="4"></div>
+        <div class="stamp-area" id="stamp-5" data-stamp-number="5"></div>
+        <div class="stamp-area" id="stamp-6" data-stamp-number="6"></div>
+        <div class="stamp-area" id="stamp-7" data-stamp-number="7"></div>
+        <div class="stamp-area" id="stamp-8" data-stamp-number="8"></div>
+        <div class="stamp-area" id="stamp-9" data-stamp-number="9"></div>
+        <div class="stamp-area" id="stamp-10" data-stamp-number="10"></div>
     </div>
 
-    <div class="footer">
-      © Eco Choice Project
+    <div id="input-form">
+        <h3>スタート</h3>
+        <div class="input-group">
+            <label for="month">が つ</label>
+            <input type="number" id="month" min="1" max="12" placeholder="12">
+        </div>
+        <div class="input-group">
+            <label for="day">に ち</label>
+            <input type="number" id="day" min="1" max="31" placeholder="14">
+        </div>
+        <div class="input-group">
+            <label for="sheet-number">ま い め</label>
+            <input type="number" id="sheet-number" min="1" placeholder="1">
+        </div>
+        <p class="note">※この情報は保存されません</p>
     </div>
-  </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
